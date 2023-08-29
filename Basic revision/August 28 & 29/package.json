@@ -1,0 +1,21 @@
+{
+  "name": "package.json",
+  "version": "1.0.0",
+  "description": "This is a package.json file for the project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node start",
+    "nodemon": "nodemon start"
+  },
+  "keywords": [
+    "credits",
+    "Steave",
+    "Griffith"
+  ],
+  "author": "Pujan Jani",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "^4.3.4"
+  }
+}
