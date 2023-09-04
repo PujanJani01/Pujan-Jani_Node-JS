@@ -1,0 +1,8 @@
+4-Sep-2023
+
+Event-driven programming
+Worker thread
+Event emitter
+Single-threaded in Node.js
+Architecture of Node.js
+
