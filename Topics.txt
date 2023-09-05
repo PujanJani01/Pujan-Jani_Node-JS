@@ -8,6 +8,10 @@ Architecture of Node.js
 
 5-Sep-2023
 
-env
-license
-event loop phases
+package.json
+package-lock.json
+npm commands - init, install, uninstall, update
+env (Extra)
+event loop phases (Extra)
+
+6-Sep-2023
