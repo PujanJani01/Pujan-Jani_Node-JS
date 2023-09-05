@@ -6,3 +6,8 @@ Event emitter
 Single-threaded in Node.js
 Architecture of Node.js
 
+5-Sep-2023
+
+env
+license
+event loop phases
