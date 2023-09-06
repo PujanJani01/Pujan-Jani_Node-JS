@@ -15,3 +15,11 @@ env (Extra)
 event loop phases (Extra)
 
 6-Sep-2023
+
+modules
+module.exports vS exports.
+Module view control
+Built-in modules - fs, path, http, stream, readline, utils, os, childprocess, 
+relative path vS absolute path
+fs - writeFile, readFile, access/exists , unlink
+
