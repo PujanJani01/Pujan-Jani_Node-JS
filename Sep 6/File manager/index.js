@@ -68,5 +68,4 @@ function fileOperations() {
         }
     });
 }
-
 fileOperations();
