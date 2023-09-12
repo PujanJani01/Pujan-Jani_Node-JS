@@ -11,8 +11,8 @@ Architecture of Node.js
 package.json
 package-lock.json
 npm commands - init, install, uninstall, update
+event loop phases
 env (Extra)
-event loop phases (Extra)
 
 6-Sep-2023
 
@@ -22,4 +22,16 @@ Module view control
 Built-in modules - fs, path, http, stream, readline, utils, os, childprocess, 
 relative path vS absolute path
 fs - writeFile, readFile, access/exists , unlink
+
+11-Sep-2023
+
+HTTP module
+HTTP methods - GET, POST, PUT, PATCH, HEAD, OPTIONS, DELETE, CONNECT, TRACE
+POST vS PUT vS PATCH
+PUT vS PATCH
+What is Idempotent?
+querystring and url modules
+
+12-Sep-2023
+
 
