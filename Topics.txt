@@ -34,4 +34,22 @@ querystring and url modules
 
 12-Sep-2023
 
+stream and buffer
+reqest.on('data', callback)
+request.on('end', callback)
+postman body format - form-data, x-www-form-urlencoded, raw, binary
+x-www-from-urlencoded vS raw
+
+13-Sep-2023
+
+callback - a function passed as an argument to another function
+callback hell
+promise - an object representing the eventual completion or failure of an asynchronous operation.
+promise chaining
+then, catch, finally
+async/await - syntactic sugar for promises
+try/catch
+fetch
+
+14-Sep-2023
 

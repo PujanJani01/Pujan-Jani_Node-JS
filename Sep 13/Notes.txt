@@ -1,0 +1,35 @@
+
+# callback :  
+
+● a function that is passed to another function as a parameter
+● It is executed after some operation has been completed.
+● Its drawbacks are : 
+    - Callback hell
+    - Lack of readability
+    - Lack of maintainability
+    - Lack of reusability
+    - Lack of scalability
+
+# Promise : 
+
+● It is an object that represents the eventual completion or failure of an asynchronous operation.
+
+# async/await : 
+
+● It is a way to write asynchronous code that looks synchronous.
+● It is syntactic sugar on top of promises.
+● It returns a promise.
+
+# then/catch/finally :
+
+● then() is used to handle the success of a promise.
+● catch() is used to handle the failure of a promise.
+● finally() is used to handle the result of a promise, whether it is resolved or rejected.
+
+# try/catch/finally :
+
+● try is used to test a block of code for errors.
+● catch is used to handle the error.
+● finally is used to execute the code, after try and catch, regardless of the result.
+
+

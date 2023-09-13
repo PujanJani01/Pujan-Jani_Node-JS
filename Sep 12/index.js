@@ -50,10 +50,10 @@ http.createServer((req, res) => {
             body += chunk;
         })
         req.on('end', () => {
-            let user = JSON.parse(body);
-            arr.push(user);
+            let user ={...JSON.parse(body), id: arr.length + 1};
+            arr.push({id: user.id, ...user});
             fs.writeFile("./users.json", JSON.stringify(arr), (err) => { if (err) console.log(err) });
-            res.end(JSON.stringify({ message: "User Added", user:{...user}}));
+            res.end(JSON.stringify({ message: "User Added", user:{id: user.id, ...user}}));
         })
     }
     else if (req.method == 'PUT') {
@@ -96,3 +96,4 @@ http.createServer((req, res) => {
         res.end("Method Not Supported")
     }
 }).listen(3000);
+
