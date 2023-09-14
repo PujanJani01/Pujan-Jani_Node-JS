@@ -8,7 +8,7 @@ const getPatientLogic = (req, res) => {
 const postPatientLogic = (req, res) => {
     let patient = {...req.body, id: patients.length + 1 };
     patients.push(patient);
-    fs.writeFile("../data/patient.json", JSON.stringify(patients), (err) => {if(err) console.log(err)});
+    fs.writeFile("./data/patient.json", JSON.stringify(patients), (err) => {if(err) console.log(err)});
     res.status(200).json(patient);
 }   
 const putPatientLogic = (req, res) => {
@@ -16,7 +16,7 @@ const putPatientLogic = (req, res) => {
     let patientIndex = patients.findIndex(patient => patient.id == patientID);
     if(patientIndex == -1) {res.status(404).json({status: 404, message: "Not Found"});  return;}
     patients[patientIndex] = {...req.body, id: Number(patientID)};
-    fs.writeFile("../data/patient.json", JSON.stringify(patients), (err) => {if(err) console.log(err)});
+    fs.writeFile("./data/patient.json", JSON.stringify(patients), (err) => {if(err) console.log(err)});
     res.status(200).json(patients[patientIndex]);
 }   
 const patchPatientLogic = (req, res) => {
@@ -24,7 +24,7 @@ const patchPatientLogic = (req, res) => {
     let patientIndex = patients.findIndex(patient => patient.id == patientID);
     if(patientIndex == -1) {res.status(404).json({status: 404, message: "Not Found"});  return;}
     patients[patientIndex] = {...patients[patientIndex],...req.body, id: Number(patientID)};
-    fs.writeFile("../data/patient.json", JSON.stringify(patients), (err) => {if(err) console.log(err)});
+    fs.writeFile("./data/patient.json", JSON.stringify(patients), (err) => {if(err) console.log(err)});
     res.status(200).json(patients[patientIndex]);
 }   
 const deletePatientLogic = (req, res) => {
@@ -32,7 +32,7 @@ const deletePatientLogic = (req, res) => {
     let patientIndex = patients.findIndex(patient => patient.id == patientID);
     if(patientIndex == -1) {res.status(404).json({status: 404, message: "Not Found"});  return;}
     patients.splice(patientIndex, 1);
-    fs.writeFile("../data/patient.json", JSON.stringify(patients), (err) => {if(err) console.log(err)});
+    fs.writeFile("./data/patient.json", JSON.stringify(patients), (err) => {if(err) console.log(err)});
     res.status(200).json(patients);
 }   
 

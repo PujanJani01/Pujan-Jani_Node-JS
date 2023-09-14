@@ -1,1 +1,17 @@
-[{"name":"vansh","id":1},{"id":2,"name":"Jane Doe"}]
+[
+    {
+        "id": 1,
+        "name": "Vansh",
+        "phone": "8126801972"
+    },
+    {
+        "id": 2,
+        "name": "Prakhar",
+        "phone": "7579030579"
+    },
+    {
+        "id": 3,
+        "name": "Rudra",
+        "phone": "8002457630"
+    }
+]

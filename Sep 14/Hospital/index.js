@@ -7,8 +7,8 @@ const patientRoutes = require('./routes/patient.routes.js');
 
 app.use(express.json());
 
-app.use('/hospital', doctorRoutes);
-app.use('/hospital', patientRoutes); 
+app.use('/hospital/doctors', doctorRoutes);
+app.use('/hospital/patients', patientRoutes); 
 
 app.use("/", (req, res) =>{
     res.send("Welcome to the hospital!")
