@@ -53,3 +53,6 @@ fetch
 
 14-Sep-2023
 
+ts to js - transpiling
+file structure - index.js, routes, controllers, services
+index.js - middleware, request parsing, cors, application routes, url not found, unhadled error

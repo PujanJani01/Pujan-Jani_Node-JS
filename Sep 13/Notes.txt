@@ -30,6 +30,17 @@
 
 ● try is used to test a block of code for errors.
 ● catch is used to handle the error.
-● finally is used to execute the code, after try and catch, regardless of the result.
+● finally is a cleanup statement which is executed after the try and catch block.
 
+# promise.all :
+
+● It is used to handle multiple promises at once.
+● It returns a single promise.
+● It resolves when all the promises are resolved.
+
+# promise chaining :
+
+● It is used to execute multiple asynchronous operations sequentially.
+● It is done by chaining multiple then() methods.
+● It returns a promise.
 
