@@ -1,13 +1,28 @@
 const doctorService = require("../services/doctor.services.js");
 
-const getDoctor = doctorService.getDoctorLogic;
+const getDoctor = (req, res) => {
+    let data = doctorService.getDoctorLogic(req);
+    res.status(200).json(data);
+}
 
-const postDoctor = doctorService.postDoctorLogic;
+const postDoctor = (req, res) => {
+    let data = doctorService.postDoctorLogic(req);
+    res.status(201).json(data);
+}
 
-const putDoctor = doctorService.putDoctorLogic;
+const putDoctor = (req, res) => {
+    let data = doctorService.putDoctorLogic(req);
+    res.status(200).json(data);
+}
 
-const patchDoctor = doctorService.patchDoctorLogic;
+const patchDoctor = (req, res) => {
+    let data = doctorService.patchDoctorLogic(req);
+    res.status(200).json(data);
+}
 
-const deleteDoctor = doctorService.deleteDoctorLogic;
+const deleteDoctor = (req, res) => {
+    let data = doctorService.deleteDoctorLogic(req);
+    res.status(200).json(data);
+}
 
 module.exports = { getDoctor, postDoctor, putDoctor, patchDoctor, deleteDoctor };

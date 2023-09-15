@@ -67,17 +67,10 @@ http.createServer((req, res) => {
         })
     }
     else if(req.method == 'DELETE'){
-        let body = '';
-        req.on("data", (chunk) => {
-            body += chunk;
-        })
-        req.on("end", () => {
-            let user = qs.parse(body);
-            let index = arr.findIndex((item) => item.id == user.id);
+            let index = arr.findIndex((item) => item.id == q.id);
             arr.splice(index, 1);
             res.setHeader('content-type', "application/json");
             res.end();
-        })
     }
     else {
         res.end("Not Found")

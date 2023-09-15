@@ -17,7 +17,7 @@ const putPatientLogic = (req, res) => {
     if(patientIndex == -1) {res.status(404).json({status: 404, message: "Not Found"});  return;}
     patients[patientIndex] = {...req.body, id: Number(patientID)};
     fs.writeFile("./data/patient.json", JSON.stringify(patients), (err) => {if(err) console.log(err)});
-    res.status(200).json(patients[patientIndex]);
+    res.status(201).json(patients[patientIndex]);
 }   
 const patchPatientLogic = (req, res) => {
     let patientID = req.params.id;

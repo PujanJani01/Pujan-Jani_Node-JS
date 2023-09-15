@@ -1,0 +1,27 @@
+
+# request object methods : 
+
+● req.path : returns the path of requested page.
+● req.method : returns the method of request.
+● req.user : returns the user object of current user.
+● req.get('header-name') : returns the value of header.
+● req.params : returns the parameters of requested page.
+● req.query : returns the query string.
+● req.body : returns the body of the request.
+● req.ip : returns the ip address of the client.
+● req.files : returns the files uploaded.
+● req.protocol : returns the protocol used.
+● req.route : returns the route object.
+
+# response object methods :
+
+● res.send() : sends the response.
+● res.end() : ends the response process.
+● res.json() : sends a json response.
+● res.sendFile() : sends a file as response.
+● res.render() : sends a view as response.
+● res.redirect() : redirects the request.
+● res.download() : downloads a file.
+● res.status() : sets the status of response.
+● res.header() : sets the header.
+

@@ -1,39 +1,39 @@
 const doctors = require('../data/doctor.json');
 const fs = require('fs');
 
-const getDoctorLogic = (req, res) => {
-    if(req.params.id) {res.status(200).json(doctors.find(doctor => doctor.id == req.params.id)); return;}
-    res.status(200).json(doctors)
+const getDoctorLogic = (req) => {
+    if(req.params.id) return doctors.find(doctor => doctor.id == req.params.id);
+    return doctors;
 }   
-const postDoctorLogic = (req, res) => {
+const postDoctorLogic = (req) => {
     let doctor = {...req.body, id: doctors.length + 1 };
     doctors.push(doctor);
     fs.writeFile("./data/doctor.json", JSON.stringify(doctors), (err) => {if(err) console.log(err)});
-    res.status(200).json(doctor);
+    return doctor;
 }   
-const putDoctorLogic = (req, res) => {
+const putDoctorLogic = (req) => {
     let doctorID = req.params.id;
     let doctorIndex = doctors.findIndex(doctor => doctor.id == doctorID);
-    if(doctorIndex == -1) {res.status(404).json({status: 404, message: "Not Found"});  return;}
+    if(doctorIndex == -1) return {status: 404, message: "Not Found"};
     doctors[doctorIndex] = {...req.body, id: Number(doctorID)};
     fs.writeFile("./data/doctor.json", JSON.stringify(doctors), (err) => {if(err) console.log(err)});
-    res.status(200).json(doctors[doctorIndex]);
+    return doctors[doctorIndex];
 }   
-const patchDoctorLogic = (req, res) => {
+const patchDoctorLogic = (req) => {
     let doctorID = req.params.id;
     let doctorIndex = doctors.findIndex(doctor => doctor.id == doctorID);
-    if(doctorIndex == -1) {res.status(404).json({status: 404, message: "Not Found"});  return;}
+    if(doctorIndex == -1) return {status: 404, message: "Not Found"};
     doctors[doctorIndex] = {...doctors[doctorIndex],...req.body, id: Number(doctorID)};
     fs.writeFile("./data/doctor.json", JSON.stringify(doctors), (err) => {if(err) console.log(err)});
-    res.status(200).json(doctors[doctorIndex]);
+    return doctors[doctorIndex];
 }   
-const deleteDoctorLogic = (req, res) => {
+const deleteDoctorLogic = (req) => {
     let doctorID = req.params.id;
     let doctorIndex = doctors.findIndex(doctor => doctor.id == doctorID);
-    if(doctorIndex == -1) {res.status(404).json({status: 404, message: "Not Found"});  return;}
+    if(doctorIndex == -1) return {status: 404, message: "Not Found"};
     doctors.splice(doctorIndex, 1);
     fs.writeFile("./data/doctor.json", JSON.stringify(doctors), (err) => {if(err) console.log(err)});
-    res.status(200).json(doctors);
+    return doctors;
 }   
 
 
