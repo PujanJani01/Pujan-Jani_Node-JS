@@ -1,27 +1,32 @@
 const doctorService = require("../services/doctor.services.js");
 
 const getDoctor = (req, res) => {
-    let data = doctorService.getDoctorLogic(req);
+    const reqData = {...req.params};
+    let data = doctorService.getDoctorLogic(reqData);
     res.status(200).json(data);
 }
 
 const postDoctor = (req, res) => {
-    let data = doctorService.postDoctorLogic(req);
+    const reqData = {body: {...req.body}};
+    let data = doctorService.postDoctorLogic(reqData);
     res.status(201).json(data);
 }
 
 const putDoctor = (req, res) => {
-    let data = doctorService.putDoctorLogic(req);
+    const reqData = {...req.params,body: {...req.body}};
+    let data = doctorService.putDoctorLogic(reqData);
     res.status(200).json(data);
 }
 
 const patchDoctor = (req, res) => {
-    let data = doctorService.patchDoctorLogic(req);
+    const reqData = {...req.params,body: {...req.body}};
+    let data = doctorService.patchDoctorLogic(reqData);
     res.status(200).json(data);
 }
 
 const deleteDoctor = (req, res) => {
-    let data = doctorService.deleteDoctorLogic(req);
+    const reqData = {...req.params};
+    let data = doctorService.deleteDoctorLogic(reqData);
     res.status(200).json(data);
 }
 
