@@ -1,7 +1,7 @@
 const patients = require('../data/patient.json');
 const fs = require('fs');
 
-const getPatientLogic = (reqData) => {
+const getPatientService = (reqData) => {
     if (reqData.id) {
         let patient = patients.find(patient => patient.id == reqData.id);
         if (!patient) return { status: 404, message: "Not Found" };
@@ -10,14 +10,14 @@ const getPatientLogic = (reqData) => {
     return patients;
 }
 
-const postPatientLogic = (reqData) => {
+const postPatientService = (reqData) => {
     let patient = { ...reqData.body, id: patients.length + 1 };
     patients.push(patient);
     fs.writeFile("./data/patient.json", JSON.stringify(patients), (err) => { if (err) console.log(err) });
-    return { status: 201, message: "Created", data: patient };
+    return { status: 201, message: "Created", id: patient.id };
 }
 
-const putPatientLogic = (reqData) => {
+const putPatientService = (reqData) => {
     let patientIndex = patients.findIndex(patient => patient.id == reqData.id);
     if (patientIndex == -1) return { status: 404, message: "Not Found" };
     patients[patientIndex] = { ...reqData.body, id: Number(reqData.id) };
@@ -25,7 +25,7 @@ const putPatientLogic = (reqData) => {
     return patients[patientIndex];
 }
 
-const patchPatientLogic = (reqData) => {
+const patchPatientService = (reqData) => {
     let patientIndex = patients.findIndex(patient => patient.id == reqData.id);
     if (patientIndex == -1) return { status: 404, message: "Not Found" };
     patients[patientIndex] = { ...patients[patientIndex], ...reqData.body, id: Number(reqData.id) };
@@ -33,7 +33,7 @@ const patchPatientLogic = (reqData) => {
     return patients[patientIndex];
 }
 
-const deletePatientLogic = (reqData) => {
+const deletePatientService = (reqData) => {
     let patientIndex = patients.findIndex(patient => patient.id == reqData.id);
     if (patientIndex == -1) return { status: 404, message: "Not Found" };
     patients.splice(patientIndex, 1);
@@ -41,4 +41,4 @@ const deletePatientLogic = (reqData) => {
     return patients;
 }
 
-module.exports = { getPatientLogic, postPatientLogic, putPatientLogic, patchPatientLogic, deletePatientLogic };
+module.exports = { getPatientService, postPatientService, putPatientService, patchPatientService, deletePatientService };

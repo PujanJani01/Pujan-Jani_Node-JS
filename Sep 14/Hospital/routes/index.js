@@ -5,5 +5,6 @@ const patientRoutes = require('./patient.routes.js');
 
 router.use('/doctors', doctorRoutes);
 router.use('/patients', patientRoutes);
+router.use('/', (req, res) => res.send('Welcome to Hospital Server'));
 
 module.exports = router;

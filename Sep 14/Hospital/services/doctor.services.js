@@ -1,7 +1,7 @@
 const doctors = require('../data/doctor.json');
 const fs = require('fs');
 
-const getDoctorLogic = (reqData) => {
+const getDoctorService = (reqData) => {
     if (reqData.id) {
         let doctor = doctors.find(doctor => doctor.id == reqData.id);
         if (!doctor) return { status: 404, message: "Not Found" };
@@ -10,14 +10,14 @@ const getDoctorLogic = (reqData) => {
     return doctors;
 }
 
-const postDoctorLogic = (reqData) => {
+const postDoctorService = (reqData) => {
     let doctor = { ...reqData.body, id: doctors.length + 1 };
     doctors.push(doctor);
     fs.writeFile("./data/doctor.json", JSON.stringify(doctors), (err) => { if (err) console.log(err) });
-    return { status: 201, message: "Created", data: doctor };
+    return { status: 201, message: "Created", id: doctor.id };
 }
 
-const putDoctorLogic = (reqData) => {
+const putDoctorService = (reqData) => {
     let doctorIndex = doctors.findIndex(doctor => doctor.id == reqData.id);
     if (doctorIndex == -1) return { status: 404, message: "Not Found" };
     doctors[doctorIndex] = { ...reqData.body, id: Number(reqData.id) };
@@ -25,7 +25,7 @@ const putDoctorLogic = (reqData) => {
     return doctors[doctorIndex];
 }
 
-const patchDoctorLogic = (reqData) => {
+const patchDoctorService = (reqData) => {
     let doctorIndex = doctors.findIndex(doctor => doctor.id == reqData.id);
     if (doctorIndex == -1) return { status: 404, message: "Not Found" };
     doctors[doctorIndex] = { ...doctors[doctorIndex], ...reqData.body, id: Number(reqData.id) };
@@ -33,7 +33,7 @@ const patchDoctorLogic = (reqData) => {
     return doctors[doctorIndex];
 }
 
-const deleteDoctorLogic = (reqData) => {
+const deleteDoctorService = (reqData) => {
     let doctorIndex = doctors.findIndex(doctor => doctor.id == reqData.id);
     if (doctorIndex == -1) return { status: 404, message: "Not Found" };
     doctors.splice(doctorIndex, 1);
@@ -41,4 +41,4 @@ const deleteDoctorLogic = (reqData) => {
     return doctors;
 }
 
-module.exports = { getDoctorLogic, postDoctorLogic, putDoctorLogic, patchDoctorLogic, deleteDoctorLogic };
+module.exports = { getDoctorService, postDoctorService, putDoctorService, patchDoctorService, deleteDoctorService };
