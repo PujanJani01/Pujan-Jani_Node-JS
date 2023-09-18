@@ -2,17 +2,14 @@ const express = require('express');
 const app = express();
 const port = 3000;
 
-const doctorRoutes = require('./routes/doctor.routes.js');
-const patientRoutes = require('./routes/patient.routes.js');
+const routes = require('./routes/index.js');
 
 app.use(express.json());
 
-app.use('/hospital/doctors', doctorRoutes);
-app.use('/hospital/patients', patientRoutes); 
+app.use('/hospital', routes);
 
 app.use("/", (req, res) =>{
     res.send("Welcome to the hospital!")
 })
-
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));

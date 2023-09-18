@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const getPatientLogic = (reqData) => {
     if (reqData.id) {
-        let patient = patients.find(patient => patient.id == req.params.id);
+        let patient = patients.find(patient => patient.id == reqData.id);
         if (!patient) return { status: 404, message: "Not Found" };
         return { status: 200, message: "Ok", data: patient };
     }
