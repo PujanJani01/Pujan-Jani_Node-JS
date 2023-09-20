@@ -1,9 +1,19 @@
 const express = require("express");
 const app = express();
 
+//------------------Middleware-----------------------
+
+function logger(req,res, next){
+    let start = Date.now();
+    // console.log("I am a request middleware");
+    next();
+    // console.log("I am a response middleware");
+    let end = Date.now() - start;
+    console.log(req.method, req.url, end + 'ms', res.statusCode)
+}
 //------------------Route paths-----------------------
 
-app.get("/", (req, res) => res.send("root"));
+app.get("/", logger, (req, res) => res.send("root"));
 
 app.get("/about", (req, res) => res.send("about"));
 
@@ -11,15 +21,17 @@ app.get("/random.txt", (req, res) => res.send("random.txt"));
 
 app.get("/ab?cd", (req, res) => res.send("ab?cd"));
 
-app.get("/ab+cd", (req, res) => res.send("ab+cd"));
+// app.get("/ab+cd", (req, res) => res.send("ab+cd"));
 
-app.get("/ab*cd", (req, res) => res.send("ab*cd"));
+// app.get("/ab*cd", (req, res) => res.send("ab*cd"));
 
-app.get("/ab(cd)?e", (req, res) => res.send("ab(cd)?e"));
+// app.get(/ab.cd/, (req, res) => res.send("ab.cd"));
+
+// app.get("/ab(cd)?e", (req, res) => res.send("ab(cd)?e"));
 
 // app.get(/a/, (req, res) => res.send("/a/"));
 
-app.get(/.*fly$/, (req, res) => res.send("/.*fly$/"));
+// app.get(/.*fly$/, (req, res) => res.send("/.*fly$/"));
 
 //------------------Route parameters------------------
 

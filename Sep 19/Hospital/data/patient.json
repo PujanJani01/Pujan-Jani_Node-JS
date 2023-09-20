@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "name": "Vansh",
+        "phone": "8126801972"
+    },
+    {
+        "id": 2,
+        "name": "Prakhar",
+        "phone": "7579030579"
+    },
+    {
+        "id": 3,
+        "name": "Rudra",
+        "phone": "8002457630"
+    },
+    {
+        "name": "Ranjit",
+        "phone": "6276113803",
+        "id": 4
+    }
+]

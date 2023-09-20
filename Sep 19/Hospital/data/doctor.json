@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "Deepak",
+        "job_title": "Dentist",
+        "phone": "9846733648"
+    },
+    {
+        "id": 2,
+        "name": "Bhaumik",
+        "job_title": "Orthopedist",
+        "phone": "7621657320"
+    },
+    {
+        "id": 3,
+        "name": "Pujan",
+        "job_title": "Surgeon",
+        "phone": "9002457102"
+    },
+    {
+        "name": "Sunil",
+        "job_title": "Dentist",
+        "phone": "9150671068",
+        "id": 4
+    }
+]
