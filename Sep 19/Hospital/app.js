@@ -3,16 +3,18 @@ const app = express();
 const port = 3000;
 
 const routes = require('./routes');
-const { logger } = require('./middlewares/logger');
-const { authenicator } = require('./middlewares/authenticator');
+const { loggerController } = require('./controllers/login.controllers');
+const { authorizer } = require('./middlewares/auth');
+const { registerController } = require('./controllers/register.controllers');
 
 app.use(express.json());
 
-app.post('/hospital/login', logger);
-app.use('/hospital', authenicator, routes);
+app.post('/register', registerController);
+app.post('/login', loggerController);
+app.use('/hospital', authorizer, routes);
 
-app.use("/*", (req, res) =>{
-    res.send("404 Not Found")
+app.use("*", (req, res) =>{
+    res.json({status: 404, message: "Not Found"})
 })
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));

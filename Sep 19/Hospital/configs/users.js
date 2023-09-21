@@ -11,7 +11,7 @@ const config = [
          "username": "deepak",
          "password": 67890,
          "role": "patient"
-       },
+       }
 ]
 
 module.exports = { config };
