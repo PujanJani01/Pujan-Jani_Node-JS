@@ -67,3 +67,20 @@ middleware use cases - authentication, authorization, logging, error handling, c
 middleware
 morgan
 Json web token
+
+22-Sep-2023
+
+SQL
+SQL commands
+Stored procedures
+function
+trigger
+SQL vS NoSQL
+Joins
+Normalization
+ER - type of relationships
+views
+indexes
+constraints - not null, default, check, unique, primary key, foreign key
+transactions
+
