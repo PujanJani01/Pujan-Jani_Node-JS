@@ -1,15 +1,17 @@
-const { config } = require('../../../../configs/users');
+let pool = require("../../../../db/db.con");
+const { errorResponse, successResponse } = require("../../../../helpers/http_response");
 const { createToken } = require('../middlewares/auth/token.js');
 
 
-const loginService = (data) => {
-    let user = config.find((user) => user.username == data.username && user.password == data.password);
-    if (!user) return { status: 404, messege: "User not found" };
-    let userData = { ...user };
-    delete userData.password;
-    delete userData.username;
+const loginService = async(data) => {
+    let query = `SELECT * FROM userconfig WHERE u_name = '${data.u_name}' AND u_pass = '${data.u_pass}'`;
+    let user = await pool.query(query);
+    if (!user) return errorResponse(res, "User not found", 404);
+    let userData = { ...user[0][0] };
+    delete userData.u_pass;
+    delete userData.u_name;
     let encodedData = createToken(userData);
-    return { status: 200, messege: "Ok", data: { ...userData, token: encodedData } };
+    return { ...userData, token: encodedData };
 }
 
 module.exports = { loginService };

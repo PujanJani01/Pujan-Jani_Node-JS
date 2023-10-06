@@ -1,9 +1,10 @@
+const { errorResponse, successResponse } = require('../../../../helpers/http_response');
 const  { loginService } = require('../services/login.services');
 
-const loginController = (req, res) => {
-    if(!req.body) return res.status(400).json({status: 400, messege: "Login data not found"});
+const loginController = async(req, res) => {
+    if(!req.body) return errorResponse(res, "Body is required", 400);
     let reqData = req.body;
-    let data = loginService(reqData)
-    return res.status(200).json(data);
+    let result = await loginService(reqData);
+    successResponse(res, result, "Success");
 }
 module.exports = { loginController };    

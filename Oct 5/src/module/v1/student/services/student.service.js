@@ -6,8 +6,7 @@ const studentAdd = async(data) => {
         const placeholders = '?,'.repeat(fields.length).replace(/,$/, '');
         const query = `INSERT INTO student2(${fields.join()})
                        VALUES(${placeholders})`;
-        const result = await pool.query(query, [data.stud_first_name, data.stud_last_name, data.stud_dept]);
-
+        await pool.query(query, [data.stud_first_name, data.stud_last_name, data.stud_dept]);
     }
     catch(err){
         console.log(err);
@@ -36,4 +35,26 @@ const studentGet = async(data) => {
     }
 }
 
-module.exports = { studentAdd, studentAll, studentGet };
+const studentUpdate = async(data) => {
+    try{
+        const query = `UPDATE student2 
+                       SET stud_first_name = ?, stud_last_name = ?, stud_dept = ? 
+                       WHERE stud_id = ?`;
+        await pool.query(query, [data.stud_first_name, data.stud_last_name, data.stud_dept, data.id]);
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+const studentDelete = async(data) => {
+    try{
+        const query = `DELETE FROM student2 WHERE stud_id = ?`;
+        await pool.query(query, [data.id]);
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+module.exports = { studentAdd, studentAll, studentGet, studentUpdate, studentDelete };

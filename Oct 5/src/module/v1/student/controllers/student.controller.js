@@ -1,23 +1,24 @@
+const { successResponse, errorResponse } = require('../../../../helpers/http_response');
 const _studentService = require('../services/student.service');
 
 const studentAdd = async (req, res) => {
     try {
         let data = Object.assign({}, req.body, req.params, req.query);
         await _studentService.studentAdd(data);
-        res.status(200).json({ message: "Student added successfully" });
+        successResponse(res, null, "Student added successfully");
     }
     catch (err) {
-        res.status(500).json({ message: err.message });
+        errorResponse(res, err.message);
     }
 }
 
 const studentAll = async (req, res) => {
     try {
         const result = await _studentService.studentAll();
-        res.status(200).json({ message: "Students fetched successfully", data: result});
+        successResponse(res, result, "Success");
     }
     catch (err) {
-        res.status(500).json({ message: err.message });
+        errorResponse(res, err.message);
     }
 }
 
@@ -25,11 +26,34 @@ const studentGet = async (req, res) => {
     try {
         let data = Object.assign({}, req.params, req.query);
         let result = await _studentService.studentGet(data);
-        res.status(200).json({ message: "Student fetched successfully", data: result});
+        if(result.length == 0) return errorResponse(res, "Student not found", 404);
+        successResponse(res, result[0], "Success");
     }
     catch (err) {
         res.status(500).json({ message: err.message });
     }
 }
 
-module.exports ={ studentAdd, studentAll, studentGet };
+const studentUpdate = async (req, res) => { 
+    try {
+        let data = Object.assign({}, req.body, req.params, req.query);
+        await _studentService.studentUpdate(data);
+        successResponse(res, null, "Updated successfully");
+    }
+    catch (err) {
+        errorResponse(res, err.message);
+    }
+}
+
+const studentDelete = async (req, res) => {
+    try {
+        let data = Object.assign({}, req.params, req.query);
+        await _studentService.studentDelete(data);
+        successResponse(res, null, "Deleted successfully");
+    }
+    catch (err) {
+        errorResponse(res, err.message);
+    }
+}
+
+module.exports = { studentAdd, studentAll, studentGet, studentUpdate , studentDelete };

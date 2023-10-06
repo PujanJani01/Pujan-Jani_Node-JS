@@ -1,6 +1,7 @@
 const express = require('express');
 const { getDoctor,
         postDoctor,
+        putDoctor,
         deleteDoctor 
       } = require('../controllers/doctor.controllers.js');
       
@@ -12,6 +13,7 @@ router.route('/')
 
 router.route('/:id')
 .get(getDoctor)
+.put(putDoctor)
 .delete(deleteDoctor);
 
 module.exports = router;
