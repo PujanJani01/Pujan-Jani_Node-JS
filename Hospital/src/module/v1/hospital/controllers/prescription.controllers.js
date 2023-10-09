@@ -1,44 +1,61 @@
 const { errorResponse, successResponse } = require("../../../../helpers/http_response.js");
 
-const { getPrescriptionService,
-    postPrescriptionService,
-    // putPrescriptionService,
-    deletePrescriptionService
-} = require("../services/prescription.services.js");
-const { getPatientService } = require("../services/patient.services.js");
+const prescriptionService = require("../services/prescription.services.js");
+const patientService = require("../services/patient.services.js");
+const doctorService = require("../services/doctor.services.js");
 
-const getPrescription = async (req, res) => {
+const prescriptionAll = async (req, res) => {
+    try{
+    let result = await prescriptionService.prescriptionAll();
+    if (result.length == 0) return errorResponse(res, "data Not Found", 404);
+    successResponse(res, result, "Success");
+    }catch(err){
+        console.log(err);
+        errorResponse(res, err.message, 500);
+    }
+}
+
+const prescriptionGet = async (req, res) => {
+    try{
     const reqData = { ...req.params };
-    let result = await getPrescriptionService(reqData);
+    let result = await prescriptionService.prescriptionGet(reqData);
     if (result.length == 0) return errorResponse(res, "Prescription Not Found", 404);
     successResponse(res, result, "Success");
+    }catch(err){
+        console.log(err);
+        errorResponse(res, err.message, 500);
+    }
 }
 
-const postPrescription = async (req, res) => {
-    let uid = { id: req.body.pre_p_id };
-    let user = await getPatientService(uid);
-    if (user.length == 0) return errorResponse(res, "Prescription Not Found", 404);
+const prescriptionAdd = async (req, res) => {
+    try{
+    let pId = { id: req.body.pre_p_id };
+    let dId = { id: req.body.pre_doc_id };
+    let patient = await patientService.patientGet(pId);
+    let doctor = await doctorService.doctorGet(dId);
+    if (patient.length == 0) return errorResponse(res, "Patient does not exist", 404);
+    if (doctor.length == 0) return errorResponse(res, "Doctor does not exist", 404);
     const data = Object.assign({}, req.body, req.params, req.query);
-    let result = await postPrescriptionService(data);
+    let result = await prescriptionService.prescriptionAdd(data);
     successResponse(res, result, "Success");
+    } catch(err){
+        console.log(err);
+        errorResponse(res, err.message, 500);
+    }
 }
 
-/* const putPrescription = async (req, res) => {
-    let uid = { id: req.params.id };
-    let user = await getPatientService(uid);
-    if (user.length == 0) return errorResponse(res, "Prescription Not Found", 404);
-    const data = Object.assign({}, req.body, req.params, req.query);
-    await putPrescriptionService(data);
-    successResponse(res, null, "Updated Successfully");
-} */
 
-const deletePrescription = async (req, res) => {
-    let uid = { id: req.body.pre_p_id };
-    let user = await getPatientService(uid);
-    if (user.length == 0) return errorResponse(res, "Prescription Not Found", 404);
+const prescriptionDelete = async (req, res) => {
+    try{
+    let pre = await prescriptionService.prescriptionGet(req.params.id);
+    if (pre.length == 0) return errorResponse(res, "Prescription Not Found", 404);
     const reqData = { ...req.params };
-    let data = await deletePrescriptionService(reqData);
-    successResponse(res, null, "Deleted Successfully");
+    await prescriptionService.prescriptionDelete(reqData);
+    successResponse(res, undefined, "Deleted Successfully");
+    } catch(err){
+        console.log(err);
+        errorResponse(res, err.message, 500);
+    }
 }
 
-module.exports = { getPrescription, postPrescription, deletePrescription, /* putPrescription */ };
+module.exports = { prescriptionAll, prescriptionGet, prescriptionAdd, prescriptionDelete };

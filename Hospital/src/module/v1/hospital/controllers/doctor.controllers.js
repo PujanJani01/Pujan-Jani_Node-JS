@@ -1,38 +1,66 @@
 const { errorResponse, successResponse } = require("../../../../helpers/http_response.js");
-const { getDoctorService, 
-        postDoctorService, 
-        putDoctorService,
-        deleteDoctorService 
-       } = require("../services/doctor.services.js");
+const doctorService = require("../services/doctor.services.js");
 
-const getDoctor = async(req, res) => {
-    const reqData = {...req.params};
-    let result = await getDoctorService(reqData);
-    if(result.length === 0) return errorResponse(res, "Doctor not found", 404);
-    successResponse(res, result[0], "Success");
+const doctorAll = async (req, res) => {
+    try {
+        let result = await doctorService.doctorAll();
+        if (result.length === 0) return errorResponse(res, "Data not found", 404);
+        successResponse(res, result[0], "Success");
+    } catch (err) {
+        console.log(err);
+        errorResponse(res, err.message, 500);
+    }
 }
 
-const postDoctor = async(req, res) => {
-    const data = Object.assign({}, req.body, req.params, req.query);
-    let result = await postDoctorService(data);
-    successResponse(res, result, "Success");
+const doctorGet = async (req, res) => {
+    try {
+        const userId = { ...req.params };
+        let result = await doctorService.doctorGet(userId);
+        if (result.length === 0) return errorResponse(res, "Doctor not found", 404);
+        successResponse(res, result[0], "Success");
+    } catch (err) {
+        console.log(err);
+        errorResponse(res, err.message, 500);
+    }
 }
 
-const putDoctor = async (req, res) => {
-    let uid = { id: req.params.id };
-    let user = await getDoctorService(uid);
-    if (user.length == 0) return errorResponse(res, "Doctor Not Found", 404);
-    const data = Object.assign({}, req.body, req.params, req.query);
-    await putDoctorService(data);
-    successResponse(res, null, "Updated Successfully");
+const doctorAdd = async (req, res) => {
+    try {
+        const data = Object.assign({}, req.body, req.params, req.query);
+        let result = await doctorService.doctorAdd(data);
+        successResponse(res, result, "Success");
+    } catch (err) {
+        console.log(err);
+        errorResponse(res, err.message, 500);
+    }
 }
 
-const deleteDoctor = async(req, res) => {
-    let id = { id: req.params.id };
-    let user = await getDoctorService(id);
-    if (user.length == 0) return errorResponse(res, "Doctor not found", 404);
-    await deleteDoctorService(id);
-    successResponse(res, null, "Deleted successfully");
+const doctorUpdate = async (req, res) => {
+    try {
+        let userId = { id: req.params.id };
+        let user = await doctorService.doctorGet(userId);
+        if (user.length == 0) return errorResponse(res, "Doctor Not Found", 404);
+        const data = Object.assign({}, req.body, req.params, req.query);
+        await doctorService.doctorUpdate(data);
+        successResponse(res, undefined, "Updated Successfully");
+    } catch (err) {
+        console.log(err);
+        errorResponse(res, err.message, 500);
+    }
 }
 
-module.exports = { getDoctor, postDoctor, deleteDoctor, putDoctor };
+const doctorDelete = async (req, res) => {
+    try {
+        let id = { id: req.params.id };
+        let user = await doctorService.doctorGet(id);
+        if (user.length == 0) return errorResponse(res, "Doctor not found", 404);
+        await doctorService.doctorDelete(id);
+        successResponse(res, undefined, "Deleted successfully");
+    } catch (err) {
+        console.log(err);
+        errorResponse(res, err.message, 500);
+    }
+}
+
+module.exports = { doctorAll, doctorGet, doctorAdd, doctorUpdate, doctorDelete };
+

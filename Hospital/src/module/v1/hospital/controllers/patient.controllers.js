@@ -1,39 +1,62 @@
 const { successResponse, errorResponse } = require("../../../../helpers/http_response.js");
-const { getPatientService, 
-    postPatientService, 
-    putPatientService,
-    deletePatientService 
-      } = require("../services/patient.services.js");
+const patientService = require("../services/patient.services.js");
 
-const getPatient = async(req, res) => {
-    const data = Object.assign({}, req.params, req.query);
-    let result = await getPatientService(data);
-    if(result.length == 0) return errorResponse(res, "Patient not found", 404);
-    successResponse(res, result, "Success");
+const patientAll = async (req, res) => {
+    try {
+        let result = await patientService.patientAll();
+        if (result.length == 0) return errorResponse(res, "Data not found", 404);
+        successResponse(res, result, "Success");
+    } catch (error) {
+        errorResponse(res, error.message, 500);
+    }
+
 }
 
-const postPatient = async(req, res) => {
-    const data = Object.assign({}, req.body, req.params, req.query);
-    let result = await postPatientService(data);
-    successResponse(res, result, "Success");
+const patientGet = async (req, res) => {
+    try {
+        const data = Object.assign({}, req.params, req.query);
+        let result = await patientService.patientGet(data);
+        if (result.length == 0) return errorResponse(res, "Patient not found", 404);
+        successResponse(res, result, "Success");
+    } catch (error) {
+        errorResponse(res, error.message, 500);
+    }
 }
 
-const putPatient = async (req, res) => {
-    let uid = { id: req.params.id };
-    let user = await getPatientService(uid);
-    if (user.length == 0) return errorResponse(res, "Patient Not Found", 404);
-    const data = Object.assign({}, req.body, req.params, req.query);
-    await putPatientService(data);
-    successResponse(res, null, "Updated Successfully");
+const patientAdd = async (req, res) => {
+    try {
+        const data = Object.assign({}, req.body, req.params, req.query);
+        let result = await patientService.patientAdd(data);
+        successResponse(res, result, "Success");
+    } catch (error) {
+        errorResponse(res, error.message, 500);
+    }
 }
 
-const deletePatient = async(req, res) => {
-    let id = { id: req.params.id };
-    let user = await getPatientService(id);
-    if (user.length == 0) return errorResponse(res, "Patient not found", 404);
-    const data = Object.assign({}, req.params, req.query);
-    await deletePatientService(data);
-    successResponse(res, null, "Deleted successfully");
+const patientUpdate = async (req, res) => {
+    try {
+        let userId = { id: req.params.id };
+        let user = await patientService.patientGet(userId);
+        if (user.length == 0) return errorResponse(res, "Patient Not Found", 404);
+        const data = Object.assign({}, req.body, req.params, req.query);
+        await patientService.patientUpdate(data);
+        successResponse(res, null, "Updated Successfully");
+    } catch (error) {
+        errorResponse(res, error.message, 500);
+    }
 }
 
-module.exports = { getPatient, postPatient, deletePatient, putPatient };
+const patientDelete = async (req, res) => {
+    try {
+        let id = { id: req.params.id };
+        let user = await patientService.patientGet(id);
+        if (user.length == 0) return errorResponse(res, "Patient not found", 404);
+        const data = Object.assign({}, req.params, req.query);
+        await patientService.patientDelete(data);
+        successResponse(res, null, "Deleted successfully");
+    } catch (error) {
+        errorResponse(res, error.message, 500);
+    }
+}
+
+module.exports = { patientAll, patientGet, patientAdd, patientUpdate, patientDelete };
