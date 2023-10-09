@@ -6,8 +6,8 @@ const doctorAll = async () => {
     return result;
 }
 const doctorGet = async (data) => {
-    const query = `SELECT * FROM doctor WHERE doc_id = ${data.id}`;
-    const result = await pool.query(query);
+    const query = `SELECT * FROM doctor WHERE doc_id = ?`;
+    const result = await pool.query(query, [data.id]);
     return result[0];
 }
 
@@ -27,8 +27,8 @@ const doctorUpdate = async (data) => {
 }
 
 const doctorDelete = async (data) => {
-    const query = `DELETE FROM doctor WHERE doc_id = ${data.id}`;
-    await pool.query(query);
+    const query = `DELETE FROM doctor WHERE doc_id = ?`;
+    await pool.query(query, [data.id]);
 }
 
 module.exports = { doctorAll, doctorGet, doctorAdd, doctorUpdate, doctorDelete };

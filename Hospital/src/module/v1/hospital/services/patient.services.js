@@ -6,8 +6,8 @@ const patientAll = async() => {
     return result[0];
 }
 const patientGet = async(data) => {
-    const query = `SELECT * FROM patient WHERE p_id = ${data.id}`;
-    const result = await pool.query(query);
+    const query = `SELECT * FROM patient WHERE p_id = ?`;
+    const result = await pool.query(query, [data.id]);
     return result[0];
 }
 
@@ -27,8 +27,8 @@ const patientUpdate = async (data) => {
 }
 
 const patientDelete = async(data) => {
-    const query = `DELETE FROM patient WHERE p_id = ${data.id}`;
-        await pool.query(query);
+    const query = `DELETE FROM patient WHERE p_id = ?`;
+        await pool.query(query, [data.id]);
 }
 
 module.exports = { patientAll, patientGet, patientAdd, patientUpdate, patientDelete };
