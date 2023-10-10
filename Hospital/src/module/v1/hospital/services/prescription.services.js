@@ -21,7 +21,7 @@ const prescriptionAdd = async (data) => {
     const placeholders = '?,'.repeat(fields.length).replace(/,$/, '');
     const query = `INSERT INTO prescription(${fields.join()})
                    VALUES(${placeholders})`;
-    await pool.query(query, [data.pre_p_id, data.pre_doc_id, pre_date, String(data.pre_medicine), pre_created_at]);
+    await pool.query(query, [data.pre_p_id, data.u_id, pre_date, String(data.pre_medicine), pre_created_at]);
 }
 
 const prescriptionDelete = async (data) => {

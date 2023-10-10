@@ -5,7 +5,7 @@ const app = express()
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads')
+        cb(null, 'public/uploads')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname);
@@ -21,6 +21,8 @@ const upload = multer({
         cb(null, true)
     }
 }).single('file');
+
+app.use(express.static('public'));
 
 app.post("/upload", (req, res) => {
     upload(req, res, function (err) {

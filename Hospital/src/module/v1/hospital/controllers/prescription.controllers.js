@@ -30,12 +30,10 @@ const prescriptionGet = async (req, res) => {
 const prescriptionAdd = async (req, res) => {
     try{
     let pId = { id: req.body.pre_p_id };
-    let dId = { id: req.body.pre_doc_id };
     let patient = await patientService.patientGet(pId);
-    let doctor = await doctorService.doctorGet(dId);
     if (patient.length == 0) return errorResponse(res, "Patient does not exist", 404);
-    if (doctor.length == 0) return errorResponse(res, "Doctor does not exist", 404);
-    const data = Object.assign({}, req.body, req.params, req.query);
+    console.log(req.user);
+    const data = Object.assign({}, req.body, req.params, req.query, req.user);
     let result = await prescriptionService.prescriptionAdd(data);
     successResponse(res, result, "Success");
     } catch(err){
