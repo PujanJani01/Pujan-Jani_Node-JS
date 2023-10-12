@@ -1,5 +1,5 @@
 
-const student = require('../../../../db/db.con')
+const student = require('../../../../model/student.model')
 
 const studentAdd = async(data) => {
     try{
@@ -10,28 +10,36 @@ const studentAdd = async(data) => {
     }
 }
 
-module.exports = { studentAdd };
-// const studentAll = async() => {
-//     try{
-//         const query = `SELECT * FROM student2`;
-//         const result = await pool.query(query);
-//         return result[0];
-//     }
-//     catch(err){
-//         console.log(err);
-//     }
-// }
+const studentAll = async() => {
+    try{
+        const result = await student.find({});
+        return result;
+    }
+    catch(err){
+        console.log(err);
+    }
+}
 
-// const studentGet = async(data) => {
-//     try{
-//         const query = `SELECT * FROM student2 WHERE stud_id = ${data.id}`;
-//         const result = await pool.query(query);
-//         return result[0];
-//     }
-//     catch(err){
-//         console.log(err);
-//     }
-// }
+const studentGetById = async(data) => {
+    try{
+        const result = await student.findOne({ _id : data.id});
+        return result;
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+const studentGetByFname = async(fname) => {
+    try{
+        const regex = new RegExp(fname, 'i');
+        const result = await student.find({ stud_first_name : regex});
+        return result;
+    }
+    catch(err){
+        console.log(err);
+    }
+}
 
 // const studentUpdate = async(data) => {
 //     try{
@@ -55,4 +63,4 @@ module.exports = { studentAdd };
 //     }
 // }
 
-// module.exports = { studentAdd, studentAll, studentGet, studentUpdate, studentDelete };
+module.exports = { studentAdd, studentAll, studentGetById, studentGetByFname };

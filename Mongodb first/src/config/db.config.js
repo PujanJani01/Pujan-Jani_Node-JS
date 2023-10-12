@@ -1,9 +1,8 @@
 
 const dbConfig = {
-    host: 'localhost',
-    user: 'root',
-    password: 'MyNewPass',
-    database: 'saeculum'
+    host: '127.0.0.1',
+    port: 27017,
+    database: 'college'
 }
 
 module.exports = dbConfig;
