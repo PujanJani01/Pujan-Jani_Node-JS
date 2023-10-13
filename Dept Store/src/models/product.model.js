@@ -4,6 +4,15 @@ const productSchema = new mongoose.Schema({
     prd_name: {
         type: String,
         required: true,
+        unique: true,
+    },
+    prd_desc: {
+        type: String,
+        required: true,
+    },
+    prd_company: {
+        type: String,
+        required: true,
     },
     prd_qty : {
         type: Number,
@@ -14,12 +23,13 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
     prd_price : {
-        type: Number,
+        type: String,
         required: true,
     },
     prd_ctg_id : {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required: true
     },
     prd_mfg_date : {
         type: Date,
@@ -37,7 +47,11 @@ const productSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: true
-    }
+    },
+    prd_imgs : {
+        type: Array,
+        required: true,
+    },  
 }, {timestamps: true});
 
 const product = mongoose.model('Product', productSchema);

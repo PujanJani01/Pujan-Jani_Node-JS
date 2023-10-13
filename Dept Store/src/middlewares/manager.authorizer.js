@@ -1,7 +1,8 @@
+const { errorResponse } = require('../helpers/http_response')
 
 const managerAuthorizer = (req, res, next) => {
     if (req.user.role !== 'manager') {
-        return res.status(401).send({ error: 'Not authorized to access this resource' })
+        return errorResponse(res, 'Not authorized', 403)
     }
     next()
 }

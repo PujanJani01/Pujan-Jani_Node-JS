@@ -1,4 +1,4 @@
-const user = require('../../../../models/userSchema.model');
+const user = require('../../../../models/user.model');
 
 const myprofileGet = async (data) => {
     try {

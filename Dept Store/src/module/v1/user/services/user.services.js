@@ -1,9 +1,9 @@
-let user = require('../../../../models/userSchema.model');
+const { hashPassword } = require('../../../../common/encrypt');
+let user = require('../../../../models/user.model');
 
-const userAll = async(data) => {
+const userAll = async() => {
     try{
         let result = await user.find({});
-        // return result.map((item) => ({...item._doc, user_pass: '**********'}));
         return result;
     }catch(err){
         console.log(err);
@@ -13,7 +13,6 @@ const userAll = async(data) => {
 const userGet = async(data) => {
     try{
         let result = await user.findById(data.id);
-        // return {...result._doc, user_pass: '**********'};
         return result;
     }catch(err){
         if(err.kind === 'ObjectId') return null;
@@ -25,6 +24,7 @@ const userUpdate = async(data) => {
     try{
        let us = await user.findById(data.id);
        if(!us) return "NoTFound";
+       await hashPassword(data);
        await user.findOneAndUpdate({_id: data.id}, data);
     }catch(err){
         if(err.kind === 'ObjectId') return null;
