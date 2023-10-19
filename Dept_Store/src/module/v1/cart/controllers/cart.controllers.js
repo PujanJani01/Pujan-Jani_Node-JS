@@ -28,7 +28,7 @@ const cartCheck = async(req, res) => {
     try{
         let result = null;
         if(req.body.isCheck == true) result = await cartServices.cartCheck(req.params);
-        if(result == "NoTFound") return errorResponse(res, "Cart not found", 404);
+        if(result == "NotFound") return errorResponse(res, "Cart not found", 404);
         successResponse(res, undefined, "Success");
     }catch(err){
         console.log(err);
@@ -38,8 +38,8 @@ const cartCheck = async(req, res) => {
 
 const cartDelete = async(req, res) => {
     try{
-        let result = await cartServices.cartDelete(req.params);
-        if(result == "NoTFound") return errorResponse(res, "cart not found", 404);
+        let result = await cartServices.cartDelete(req.user);
+        if(result == "NotFound") return errorResponse(res, "cart not found", 404);
         successResponse(res, undefined, "Success");
     }catch(err){
         console.log(err);
@@ -47,5 +47,26 @@ const cartDelete = async(req, res) => {
     }
 }
 
+const cartAdd = async(req, res) => {
+    try{
+        let result = await cartServices.cartAdd(req.body, req.user);
+        if(result == "AlreadyExists") return errorResponse(res, "Already Exists", 400);
+        successResponse(res, undefined, "Success");
+    }catch(err){
+        console.log(err);
+        errorResponse(res, "Internal Server Error", 500);
+    }
+}
 
-module.exports = { cartAll, cartGet, cartDelete, cartCheck };
+const cartUpdate = async(req, res) => {
+    try{
+        let result = await cartServices.cartUpdate(req.body, req.user);
+        if(result == "NotFound") return errorResponse(res, "cart not found", 404);
+        successResponse(res, undefined, "Success");
+    }catch(err){
+        console.log(err);
+        errorResponse(res, "Internal Server Error", 500);
+    }
+}
+
+module.exports = { cartAll, cartGet, cartDelete, cartCheck, cartAdd, cartUpdate };

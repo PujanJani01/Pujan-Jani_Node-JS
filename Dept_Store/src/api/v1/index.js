@@ -6,7 +6,6 @@ const productRoutes = require('../../module/v1/product/routes/product.routes');
 const categoryRouter = require('../../module/v1/category/routes/category.routes');
 const cartRoutes = require('../../module/v1/cart/routes/cart.routes');
 const userprofileRoutes = require('../../module/v1/userDesk/routes/userprofile.routes');
-const usercartRoutes = require('../../module/v1/userDesk/routes/usercart.routes');
 const orderRoutes = require('../../module/v1/order/routes/order.routes');
 
 module.exports = () => {
@@ -19,7 +18,6 @@ module.exports = () => {
    cartRoutes(api);
    orderRoutes(api);
    userprofileRoutes(api);
-   usercartRoutes(api);
    return api;
 }
 

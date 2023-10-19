@@ -8,12 +8,10 @@ const { default: mongoose } = require('mongoose');
 const cartAll = async (data) => {
     try {
         let result = null;
-        console.log(data);
         let uid = new mongoose.Types.ObjectId(data.id);
         if(data.role == 'customer') result = await carts.find({ cart_user_id: uid })
         else result = await carts.find();
         if (!result) return null;
-        console.log(result);
         for (let i = 0; i < result.length; i++) {
             let cartitms = await cartItems.find({ cartitm_cart_id: result[i].id });
             let total = 0;
@@ -59,13 +57,13 @@ const cartGet = async (data) => {
 }
 
 
-const cartDelete = async (data) => {
+const cartDelete = async (user) => {
     try {
-        let us = await carts.findById(data.cid);
-        if (!us) return "NoTFound";
-        await carts.findOneAndDelete({ _id: data.cid });
+        let cart = await carts.findOne({ cart_user_id: user.id });
+        if (!cart) return "NotFound";
+        await cartItems.deleteMany({ cartitm_cart_id: cart._id });
+        await carts.findOneAndDelete({ _id: cart._id });
     } catch (err) {
-        if (err.kind === 'ObjectId') return null;
         console.log(err);
     }
 }
@@ -73,7 +71,7 @@ const cartDelete = async (data) => {
 const cartCheck = async (data) => {
     try {
         let cart = await carts.findOne({ _id: data.cid });
-        if (!cart) return "NoTFound";
+        if (!cart) return "NotFound";
         let prds = await cartItems.find({ cartitm_cart_id: cart._id });
         let orderitms = prds.map(prd => ({ prd_id: prd.cartitm_prd_id, prd_qty: prd.cartitm_qty }));
         let total = 0;
@@ -81,7 +79,6 @@ const cartCheck = async (data) => {
             let prd = await product.findById(orderitms[i].prd_id);
             total += prd.prd_price.split('.')[1] * orderitms[i].prd_qty;
         }
-        console.log(total);
         await order.create({ order_user_id: cart.cart_user_id, order_items: orderitms, order_total_amount: 'Rs.' + total });
         await cartItems.deleteMany({ cartitm_cart_id: cart.id });
         await carts.findOneAndDelete({ _id: cart._id });
@@ -90,4 +87,34 @@ const cartCheck = async (data) => {
     }
 }
 
-module.exports = { cartAll, cartGet, cartDelete, cartCheck };
+const cartAdd = async (data, user) => {
+    try {
+        let result = await carts.findOne({ cart_user_id: user.id });
+        if (result) return "Already Exists";
+        let prds = [...data.cart_products];
+        result = await carts.create({ cart_user_id: user.id });
+        let usercart = await carts.findOne({ cart_user_id: user.id });
+        let cartitms = prds.map(prd => ({ cartitm_cart_id: usercart.id, cartitm_prd_id: prd.prd_id, cartitm_qty: prd.prd_qty }));
+        return await cartItems.insertMany(cartitms);
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+const cartUpdate = async (data, user) => {
+    try {
+        let usercart = await carts.findOne({ cart_user_id: user.id });
+        if (!usercart) return "NotFound";
+        for (let i = 0; i < data.cart_items.length; i++) {
+            let cartitm = null;
+            cartitm= await cartItems.findOne({ cartitm_cart_id: usercart._id, cartitm_prd_id: data.cart_items[i].prd_id });
+            if (!cartitm) await cartItems.create({ cartitm_cart_id: usercart._id, cartitm_prd_id: data.cart_items[i].prd_id, cartitm_qty: data.cart_items[i].prd_qty });
+            cartitm = await cartItems.findOne({ cartitm_cart_id: usercart._id, cartitm_prd_id: data.cart_items[i].prd_id });
+            await cartItems.findByIdAndUpdate(cartitm._id, { cartitm_qty: data.cart_items[i].prd_qty });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+module.exports = { cartAll, cartGet, cartDelete, cartCheck, cartAdd, cartUpdate };
