@@ -15,12 +15,11 @@ const verifyToken = (req, res, next) => {
 
         const auth = req.headers.authorization.split("Bearer ")[1];
         
-        const decodedData = jwt.verify(auth, process.env.SECRET_KEY);
-        
-        req.user = decodedData;
-
-        next();
-
+        jwt.verify(auth, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) return res.status(401).json({ status: 401, message: 'Invalid Token' });
+            req.user = decoded;
+            next();
+        });
     } catch (err) {
         if (err.name === "JsonWebTokenError")
             return res.status(401).json({ status: 401, message: err.message });

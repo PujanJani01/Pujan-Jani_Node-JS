@@ -4,10 +4,31 @@ const { successResponse, errorResponse } = require('../../../../helpers/http-res
 const register = async (req, res) => {
     try {
         const result = await authServices.register(req.body);
-        successResponse({ res, message: 'User registered successfully', data: result.userData, token: result.encodedData });
+        successResponse({
+            res,
+            message: 'User registered successfully',
+            data: result.userData,
+            token: result.encodedData
+        });
+        
     } catch (err) {
         errorResponse(res, err);
     }
 }
 
-module.exports = { register };
+const login = async (req, res) => {
+    try {
+        const result = await authServices.login(req.body);
+        successResponse({
+            res,
+            message: 'User logged in successfully',
+            data: result.userData,
+            token: result.encodedData
+        });
+        
+    } catch (err) {
+        errorResponse(res, err);
+    }
+}
+
+module.exports = { register, login };
