@@ -102,5 +102,5 @@
     "src",
     "types",
     "src/config/*.json"
-  ]
+, "dist/basics.js"  ]
 }
